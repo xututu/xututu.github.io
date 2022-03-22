@@ -291,51 +291,51 @@ function copy_code_block () {
   var clipboard = new ClipboardJS('.copy-code')
 }
 
-function attach_image () {
-  $('#upload-img-file').change(function () {
-    if (this.files.length > 10) {
-      addComment.createButterbar('每次上传上限为10张.<br>10 files max per request.')
-      return 0
-    }
-    for (i = 0; i < this.files.length; i++) {
-      if (this.files[i].size >= 5242880) {
-        alert('图片上传大小限制为5 MB.\n5 MB max per file.\n\n「' + this.files[i].name + '」\n\n这张图太大啦~\nThis image is too large~')
-      }
-    }
-    for (var i = 0; i < this.files.length; i++) {
-      var f = this.files[i]
-      var formData = new FormData()
-      formData.append('smfile', f)
-      $.ajax({
-        url: 'https://sm.ms/api/upload',
-        type: 'POST',
-        processData: false,
-        contentType: false,
-        data: formData,
-        beforeSend: function (xhr) {
-          $('.insert-image-tips').html('<i class="fa fa-spinner rotating" aria-hidden="true"></i>')
-          addComment.createButterbar('上传中...<br>Uploading...')
-        }, success: function (res) {
-          $('.insert-image-tips').html('<i class="fa fa-check" aria-hidden="true"></i>')
-          setTimeout(function () {
-            $('.insert-image-tips').html('<i class="fa fa-picture-o" aria-hidden="true"></i>')
-          }, 1000)
-          var get_the_url = res.data.url.replace('https://i.loli.net/', 'https://static.shino.cc/user-upload/')
-          $('#upload-img-show').append('<img class="lazyload upload-image-preview" src="https://cdn.jsdelivr.net/gh/moezx/cdn@3.0.2/img/svg/loader/trans.ajax-spinner-preloader.svg" data-src="' + get_the_url + '" onclick="window.open(\'' + get_the_url + '\')" onerror="imgError(this)" />')
-          lazyload()
-          addComment.createButterbar('图片上传成功~<br>Uploaded successfully~')
-          grin(res.data.url.replace('https://i.loli.net/', '{UPLOAD}'), type = 'Img')
-        }, error: function () {
-          $('.insert-image-tips').html('<i class="fa fa-times" aria-hidden="true" style="color:red"></i>')
-          alert('上传失败，请重试.\nUpload failed, please try again.')
-          setTimeout(function () {
-            $('.insert-image-tips').html('<i class="fa fa-picture-o" aria-hidden="true"></i>')
-          }, 1000)
-        }
-      })
-    }
-  })
-}
+// function attach_image () {
+//   $('#upload-img-file').change(function () {
+//     if (this.files.length > 10) {
+//       addComment.createButterbar('每次上传上限为10张.<br>10 files max per request.')
+//       return 0
+//     }
+//     for (i = 0; i < this.files.length; i++) {
+//       if (this.files[i].size >= 5242880) {
+//         alert('图片上传大小限制为5 MB.\n5 MB max per file.\n\n「' + this.files[i].name + '」\n\n这张图太大啦~\nThis image is too large~')
+//       }
+//     }
+//     for (var i = 0; i < this.files.length; i++) {
+//       var f = this.files[i]
+//       var formData = new FormData()
+//       formData.append('smfile', f)
+//       $.ajax({
+//         url: 'https://sm.ms/api/upload',
+//         type: 'POST',
+//         processData: false,
+//         contentType: false,
+//         data: formData,
+//         beforeSend: function (xhr) {
+//           $('.insert-image-tips').html('<i class="fa fa-spinner rotating" aria-hidden="true"></i>')
+//           addComment.createButterbar('上传中...<br>Uploading...')
+//         }, success: function (res) {
+//           $('.insert-image-tips').html('<i class="fa fa-check" aria-hidden="true"></i>')
+//           setTimeout(function () {
+//             $('.insert-image-tips').html('<i class="fa fa-picture-o" aria-hidden="true"></i>')
+//           }, 1000)
+//           var get_the_url = res.data.url.replace('https://i.loli.net/', 'https://static.shino.cc/user-upload/')
+//           $('#upload-img-show').append('<img class="lazyload upload-image-preview" src="https://cdn.jsdelivr.net/gh/moezx/cdn@3.0.2/img/svg/loader/trans.ajax-spinner-preloader.svg" data-src="' + get_the_url + '" onclick="window.open(\'' + get_the_url + '\')" onerror="imgError(this)" />')
+//           lazyload()
+//           addComment.createButterbar('图片上传成功~<br>Uploaded successfully~')
+//           grin(res.data.url.replace('https://i.loli.net/', '{UPLOAD}'), type = 'Img')
+//         }, error: function () {
+//           $('.insert-image-tips').html('<i class="fa fa-times" aria-hidden="true" style="color:red"></i>')
+//           alert('上传失败，请重试.\nUpload failed, please try again.')
+//           setTimeout(function () {
+//             $('.insert-image-tips').html('<i class="fa fa-picture-o" aria-hidden="true"></i>')
+//           }, 1000)
+//         }
+//       })
+//     }
+//   })
+// }
 
 function clean_upload_images () {
   $('#upload-img-show').html('')
@@ -387,7 +387,7 @@ function headertop_down () {
     scrollTop: coverOffset
   }, 600)
 }
-
+// 滚动条
 function scrollBar () {
   if (document.body.clientWidth > 860) {
     $(window).scroll(function () {
@@ -440,7 +440,7 @@ function checkBgImgCookie () {
       $('.blank').css('background-color', 'rgba(255,255,255,1)')
       $('.pattern-center').removeClass('pattern-center').addClass('pattern-center-sakura')
       $('.headertop-bar').removeClass('headertop-bar').addClass('headertop-bar-sakura')
-    } else if (bgurl == 'https://api.ixiaowai.cn/api/api.php') {
+    } else if (bgurl == 'https://api.shino.cc/bing/') {
       mashiro_global.variables.skinSecter = true
       mashiro_global.variables.isNight = true
       $('#night-mode-cover').css('visibility', 'hidden')
@@ -453,61 +453,8 @@ function checkBgImgCookie () {
     return false
   }
 }
-// 背景
-function checkEffectsCookie() {
-  var efurl = getCookie('sakuraEffectCookie')
-  if(efurl) {
-    var effect = document.createElement("script")
-    effect.setAttribute("src","https://cdn.jsdelivr.net/gh/yremp/yremp-js@1.5/sakura.js")
-    effect.setAttribute("id","sakura-effect")
-    document.getElementsByTagName("body").item(0).appendChild(effect)
-  }
-  efurl = getCookie('snowyEffectCookie')
-  if(efurl) {
-    var effect = document.createElement("script")        
-    effect.setAttribute("src","https://cdn.jsdelivr.net/gh/ctz45562/cdn@1.3.3/js/snow.js")
-    effect.setAttribute("id","snow-effect")
-    document.getElementsByTagName("body").item(0).appendChild(effect)
-  }
-  efurl = getCookie('linesEffectCookie')
-  if(efurl) {
-    var effect = document.createElement("script")        
-    effect.setAttribute("src","https://cdn.jsdelivr.net/gh/ctz45562/cdn@1.3.3/js/line.js")
-    effect.setAttribute("id","line-effect")
-    document.getElementsByTagName("body").item(0).appendChild(effect)
-  }
-  efurl = getCookie('beltsEffectCookie')
-  if(efurl){
-    var effect = document.createElement("script")        
-    effect.setAttribute("src","https://cdn.jsdelivr.net/gh/ctz45562/cdn@1.4.0/js/piao.js")
-    effect.setAttribute("id","belt-effect")
-    document.getElementsByTagName("body").item(0).appendChild(effect)
-  }
-  efurl = getCookie('wordsEffectCookie')
-  if(efurl){
-    var effect = document.createElement("script")        
-    effect.setAttribute("src","https://cdn.jsdelivr.net/gh/ctz45562/cdn@1.4.0/js/coderain.js")
-    effect.setAttribute("id","words-effect")
-    document.getElementsByTagName("body").item(0).appendChild(effect)
-  }  
-  efurl = getCookie('pointEffectCookie')
-  if(efurl){
-    var effect = document.createElement("script")        
-    effect.setAttribute("src","https://cdn.jsdelivr.net/gh/ctz45562/cdn@1.4.3/js/pointrain.js")
-    effect.setAttribute("id","point-effect")
-    document.getElementsByTagName("body").item(0).appendChild(effect)
-  }
-  efurl = getCookie('rainEffectCookie')
-  if(efurl){
-    var effect = document.createElement("script")
-    effect.setAttribute("src","https://cdn.jsdelivr.net/gh/ctz45562/cdn@1.4.5/js/raindrop.js")
-    effect.setAttribute("id","raindrop-effect")
-    document.getElementsByTagName("body").item(0).appendChild(effect)
-  }
-}
 if (document.body.clientWidth > 860) {
   checkBgImgCookie()
-  checkEffectsCookie()
 }
 
 function no_right_click () {
@@ -557,7 +504,7 @@ $(document).ready(function () {
   changeBG('#pixiv-bg', 'https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/themebg/star.png')
   changeBG('#KAdots-bg', 'https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/themebg/point.png')
   changeBG('#totem-bg', 'https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/themebg/little-monster.png')
-  changeBGnoTrans('#bing-bg', 'https://api.ixiaowai.cn/api/api.php')
+  changeBGnoTrans('#bing-bg', 'https://api.shino.cc/bing/')
   $('.skin-menu #white-bg').click(function () {
     mashiro_global.variables.skinSecter = false
     mashiro_global.variables.isNight = false
@@ -923,26 +870,26 @@ $(document).on('click', '.sm', function () {
     aler('已取消')
   }
 })
-$.fn.commentPrivate = function () {
-  if ($(this).hasClass('private_now')) {
-    alert('您之前已设过私密评论')
-    return false
-  } else {
-    $(this).addClass('private_now')
-    var idp = $(this).data('idp'),
-      actionp = $(this).data('actionp'),
-      rateHolderp = $(this).children('.has_set_private')
-    var ajax_data = {
-      action: 'siren_private',
-      p_id: idp,
-      p_action: actionp
-    }
-    $.post('/wp-admin/admin-ajax.php', ajax_data, function (data) {
-      $(rateHolderp).html(data)
-    })
-    return false
-  }
-}
+// $.fn.commentPrivate = function () {
+//   if ($(this).hasClass('private_now')) {
+//     alert('您之前已设过私密评论')
+//     return false
+//   } else {
+//     $(this).addClass('private_now')
+//     var idp = $(this).data('idp'),
+//       actionp = $(this).data('actionp'),
+//       rateHolderp = $(this).children('.has_set_private')
+//     var ajax_data = {
+//       action: 'siren_private',
+//       p_id: idp,
+//       p_action: actionp
+//     }
+//     $.post('/wp-admin/admin-ajax.php', ajax_data, function (data) {
+//       $(rateHolderp).html(data)
+//     })
+//     return false
+//   }
+// }
 
 function show_date_time () {
   BirthDay = new Date('06/02/2017 18:00:00')
@@ -1056,137 +1003,137 @@ $(function () {
   inlojv_js_getqqinfo()
 })
 
-function inlojv_js_getqqinfo () {
-  var is_get_by_qq = false
-  var qq_test = /^[0-9]+$/
-  if (!getCookie('user_qq') && !getCookie('user_qq_email') && !getCookie('user_author')) {
-    $('input#qq,input#author,input#email,input#url').val('')
-  }
-  if (getCookie('user_avatar') && getCookie('user_qq') && getCookie('user_qq_email')) {
-    $('div.comment-user-avatar img').attr('src', getCookie('user_avatar'))
-    $('input#author').val(getCookie('user_author'))
-    $('input#email').val(getCookie('user_qq') + '@qq.com')
-    $('input#qq').val(getCookie('user_qq'))
-    if (mashiro_option.qzone_autocomplete) {
-      $('input#url').val('https://user.qzone.qq.com/' + getCookie('user_qq'))
-    }
-    if ($('input#qq').val()) {
-      $('.qq-check').css('display', 'block')
-      $('.gravatar-check').css('display', 'none')
-    }
-  }
-  var emailAddressFlag = $('input#email').val()
-  $('input#author').on('blur', function () {
-    var qq = $('input#author').val()
-    $.ajax({
-      type: 'get',
-      url: mashiro_option.qq_api_url + '?type=getqqnickname&qq=' + qq,
-      dataType: 'jsonp',
-      jsonp: 'callback',
-      jsonpCallback: 'portraitCallBack',
-      success: function (data) {
-        $('input#author').val(data[qq][6])
-        $('input#email').val($.trim(qq) + '@qq.com')
-        if (mashiro_option.qzone_autocomplete) {
-          $('input#url').val('https://user.qzone.qq.com/' + $.trim(qq))
-        }
-        $('div.comment-user-avatar img').attr('src', 'https://q2.qlogo.cn/headimg_dl?dst_uin=' + qq + '&spec=100')
-        is_get_by_qq = true
-        $('input#qq').val($.trim(qq))
-        if ($('input#qq').val()) {
-          $('.qq-check').css('display', 'block')
-          $('.gravatar-check').css('display', 'none')
-        }
-        setCookie('user_author', data[qq][6], 30)
-        setCookie('user_qq', qq, 30)
-        setCookie('is_user_qq', 'yes', 30)
-        setCookie('user_qq_email', qq + '@qq.com', 30)
-        setCookie('user_email', qq + '@qq.com', 30)
-        emailAddressFlag = $('input#email').val()
-      }, error: function () {
-        if (qq_test.test(qq)) {
-          addComment.createButterbar('QQ号不存在（建议不要使用纯数字昵称）')
-        }
-        $('input#qq').val('')
-        $('.qq-check').css('display', 'none')
-        $('.gravatar-check').css('display', 'block')
-        $('div.comment-user-avatar img').attr('src', get_gravatar($('input#email').val(), 80))
-        setCookie('user_qq', '', 30)
-        setCookie('user_email', $('input#email').val(), 30)
-        setCookie('user_avatar', get_gravatar($('input#email').val(), 80), 30)
-      }
-    })
-    $.ajax({
-      type: 'get',
-      url: mashiro_option.qq_avatar_api_url + '?type=getqqavatar&qq=' + qq,
-      dataType: 'jsonp',
-      jsonp: 'callback',
-      jsonpCallback: 'qqavatarCallBack',
-      beforeSend: function () {
-        if (qq_test.test(qq)) {
-          addComment.createButterbar('正在获取QQ头像...')
-        }
-      }, success: function (data) {
-        $('div.comment-user-avatar img').attr('src', data[qq])
-        addComment.createButterbar('QQ头像获取成功')
-        setCookie('user_avatar', data[qq], 30)
-      }, error: function () {
-        if (qq_test.test(qq)) {
-          addComment.createButterbar('QQ号不存在（建议不要使用纯数字昵称）')
-        }
-        $('input#qq', 'input#email', 'input#url').val('')
-        if (!$('input#qq').val()) {
-          $('.qq-check').css('display', 'none')
-          $('.gravatar-check').css('display', 'block')
-          setCookie('user_qq', '', 30)
-          $('div.comment-user-avatar img').attr('src', get_gravatar($('input#email').val(), 80))
-          setCookie('user_avatar', get_gravatar($('input#email').val(), 80), 30)
-        }
-      }
-    })
-  })
-  if (getCookie('user_avatar') && getCookie('user_email') && getCookie('is_user_qq') == 'no' && !getCookie('user_qq_email')) {
-    $('div.comment-user-avatar img').attr('src', getCookie('user_avatar'))
-    $('input#email').val(getCookie('user_email'))
-    $('input#qq').val('')
-    if (!$('input#qq').val()) {
-      $('.qq-check').css('display', 'none')
-      $('.gravatar-check').css('display', 'block')
-    }
-  }
-  $('input#email').on('blur', function () {
-    var emailAddress = $('input#email').val()
-    if (is_get_by_qq == false || emailAddressFlag != emailAddress) {
-      $('div.comment-user-avatar img').attr('src', get_gravatar(emailAddress, 80))
-      setCookie('user_avatar', get_gravatar(emailAddress, 80), 30)
-      setCookie('user_email', emailAddress, 30)
-      setCookie('user_qq_email', '', 30)
-      setCookie('is_user_qq', 'no', 30)
-      $('input#qq').val('')
-      if (!$('input#qq').val()) {
-        $('.qq-check').css('display', 'none')
-        $('.gravatar-check').css('display', 'block')
-      }
-    }
-  })
-  if (getCookie('user_url')) {
-    $('input#url').val(getCookie('user_url'))
-  }
-  $('input#url').on('blur', function () {
-    var URL_Address = $('input#url').val()
-    $('input#url').val(URL_Address)
-    setCookie('user_url', URL_Address, 30)
-  })
-  if (getCookie('user_author')) {
-    $('input#author').val(getCookie('user_author'))
-  }
-  $('input#author').on('blur', function () {
-    var user_name = $('input#author').val()
-    $('input#author').val(user_name)
-    setCookie('user_author', user_name, 30)
-  })
-}
-
+// function inlojv_js_getqqinfo () {
+//   var is_get_by_qq = false
+//   var qq_test = /^[0-9]+$/
+//   if (!getCookie('user_qq') && !getCookie('user_qq_email') && !getCookie('user_author')) {
+//     $('input#qq,input#author,input#email,input#url').val('')
+//   }
+//   if (getCookie('user_avatar') && getCookie('user_qq') && getCookie('user_qq_email')) {
+//     $('div.comment-user-avatar img').attr('src', getCookie('user_avatar'))
+//     $('input#author').val(getCookie('user_author'))
+//     $('input#email').val(getCookie('user_qq') + '@qq.com')
+//     $('input#qq').val(getCookie('user_qq'))
+//     if (mashiro_option.qzone_autocomplete) {
+//       $('input#url').val('https://user.qzone.qq.com/' + getCookie('user_qq'))
+//     }
+//     if ($('input#qq').val()) {
+//       $('.qq-check').css('display', 'block')
+//       $('.gravatar-check').css('display', 'none')
+//     }
+//   }
+//   var emailAddressFlag = $('input#email').val()
+//   $('input#author').on('blur', function () {
+//     var qq = $('input#author').val()
+//     $.ajax({
+//       type: 'get',
+//       url: mashiro_option.qq_api_url + '?type=getqqnickname&qq=' + qq,
+//       dataType: 'jsonp',
+//       jsonp: 'callback',
+//       jsonpCallback: 'portraitCallBack',
+//       success: function (data) {
+//         $('input#author').val(data[qq][6])
+//         $('input#email').val($.trim(qq) + '@qq.com')
+//         if (mashiro_option.qzone_autocomplete) {
+//           $('input#url').val('https://user.qzone.qq.com/' + $.trim(qq))
+//         }
+//         $('div.comment-user-avatar img').attr('src', 'https://q2.qlogo.cn/headimg_dl?dst_uin=' + qq + '&spec=100')
+//         is_get_by_qq = true
+//         $('input#qq').val($.trim(qq))
+//         if ($('input#qq').val()) {
+//           $('.qq-check').css('display', 'block')
+//           $('.gravatar-check').css('display', 'none')
+//         }
+//         setCookie('user_author', data[qq][6], 30)
+//         setCookie('user_qq', qq, 30)
+//         setCookie('is_user_qq', 'yes', 30)
+//         setCookie('user_qq_email', qq + '@qq.com', 30)
+//         setCookie('user_email', qq + '@qq.com', 30)
+//         emailAddressFlag = $('input#email').val()
+//       }, error: function () {
+//         if (qq_test.test(qq)) {
+//           addComment.createButterbar('QQ号不存在（建议不要使用纯数字昵称）')
+//         }
+//         $('input#qq').val('')
+//         $('.qq-check').css('display', 'none')
+//         $('.gravatar-check').css('display', 'block')
+//         $('div.comment-user-avatar img').attr('src', get_gravatar($('input#email').val(), 80))
+//         setCookie('user_qq', '', 30)
+//         setCookie('user_email', $('input#email').val(), 30)
+//         setCookie('user_avatar', get_gravatar($('input#email').val(), 80), 30)
+//       }
+//     })
+//     $.ajax({
+//       type: 'get',
+//       url: mashiro_option.qq_avatar_api_url + '?type=getqqavatar&qq=' + qq,
+//       dataType: 'jsonp',
+//       jsonp: 'callback',
+//       jsonpCallback: 'qqavatarCallBack',
+//       beforeSend: function () {
+//         if (qq_test.test(qq)) {
+//           addComment.createButterbar('正在获取QQ头像...')
+//         }
+//       }, success: function (data) {
+//         $('div.comment-user-avatar img').attr('src', data[qq])
+//         addComment.createButterbar('QQ头像获取成功')
+//         setCookie('user_avatar', data[qq], 30)
+//       }, error: function () {
+//         if (qq_test.test(qq)) {
+//           addComment.createButterbar('QQ号不存在（建议不要使用纯数字昵称）')
+//         }
+//         $('input#qq', 'input#email', 'input#url').val('')
+//         if (!$('input#qq').val()) {
+//           $('.qq-check').css('display', 'none')
+//           $('.gravatar-check').css('display', 'block')
+//           setCookie('user_qq', '', 30)
+//           $('div.comment-user-avatar img').attr('src', get_gravatar($('input#email').val(), 80))
+//           setCookie('user_avatar', get_gravatar($('input#email').val(), 80), 30)
+//         }
+//       }
+//     })
+//   })
+//   if (getCookie('user_avatar') && getCookie('user_email') && getCookie('is_user_qq') == 'no' && !getCookie('user_qq_email')) {
+//     $('div.comment-user-avatar img').attr('src', getCookie('user_avatar'))
+//     $('input#email').val(getCookie('user_email'))
+//     $('input#qq').val('')
+//     if (!$('input#qq').val()) {
+//       $('.qq-check').css('display', 'none')
+//       $('.gravatar-check').css('display', 'block')
+//     }
+//   }
+//   $('input#email').on('blur', function () {
+//     var emailAddress = $('input#email').val()
+//     if (is_get_by_qq == false || emailAddressFlag != emailAddress) {
+//       $('div.comment-user-avatar img').attr('src', get_gravatar(emailAddress, 80))
+//       setCookie('user_avatar', get_gravatar(emailAddress, 80), 30)
+//       setCookie('user_email', emailAddress, 30)
+//       setCookie('user_qq_email', '', 30)
+//       setCookie('is_user_qq', 'no', 30)
+//       $('input#qq').val('')
+//       if (!$('input#qq').val()) {
+//         $('.qq-check').css('display', 'none')
+//         $('.gravatar-check').css('display', 'block')
+//       }
+//     }
+//   })
+//   if (getCookie('user_url')) {
+//     $('input#url').val(getCookie('user_url'))
+//   }
+//   $('input#url').on('blur', function () {
+//     var URL_Address = $('input#url').val()
+//     $('input#url').val(URL_Address)
+//     setCookie('user_url', URL_Address, 30)
+//   })
+//   if (getCookie('user_author')) {
+//     $('input#author').val(getCookie('user_author'))
+//   }
+//   $('input#author').on('blur', function () {
+//     var user_name = $('input#author').val()
+//     $('input#author').val(user_name)
+//     setCookie('user_author', user_name, 30)
+//   })
+// }
+// 诗句
 function get_poem (poem_ele, info_ele) {
   var poem = document.querySelector(poem_ele)
   var info = document.querySelector(info_ele)
@@ -1848,6 +1795,11 @@ if ((isWebkit || isOpera || isIe) && document.getElementById && window.addEventL
     }
   }, false)
 }
+// loadCSS(mashiro_option.jsdelivr_css_src);
+// loadCSS("https://at.alicdn.com/t/font_679578_dishi1yoavm.css");
+// loadCSS("https://cdn.jsdelivr.net/gh/moezx/cdn@3.5.4/fonts/Moe-Mashiro/stylesheet.css");
+// loadCSS("https://fonts.googleapis.com/css?family=Noto+SerifMerriweather|Merriweather+Sans|Source+Code+Pro|Ubuntu:400,700");
+// loadCSS("https://cdn.jsdelivr.net/gh/moezx/cdn@3.3.9/css/sharejs.css");;
 
 function render (template, context) {
   var tokenReg = /(\\)?\{([^\{\}\\]+)(\\)?\}/g
@@ -1879,3 +1831,103 @@ $(document).ready(function () {
     $('p').remove('.head-copyright')
   }, 0)
 })
+
+// function aplayerF() {
+//     'use strict';
+//     var aplayers = [],
+//         loadMeting = function () {
+//             function a(a, b) {
+//                 var c = {
+//                     container: a,
+//                     audio: b,
+//                     mini: null,
+//                     fixed: null,
+//                     autoplay: !1,
+//                     mutex: !0,
+//                     lrcType: 3,
+//                     listFolded: !1,
+//                     preload: 'auto',
+//                     theme: '#2980b9',
+//                     loop: 'all',
+//                     order: 'list',
+//                     volume: null,
+//                     listMaxHeight: null,
+//                     customAudioType: null,
+//                     storageName: 'metingjs'
+//                 };
+//                 if (b.length) {
+//                     b[0].lrc || (c.lrcType = 0);
+//                     var d = {};
+//                     for (var e in c) {
+//                         var f = e.toLowerCase();
+//                         (a.dataset.hasOwnProperty(f) || a.dataset.hasOwnProperty(e) || null !== c[e]) && (d[e] = a.dataset[f] || a.dataset[e] || c[e], ('true' === d[e] || 'false' === d[e]) && (d[e] = 'true' == d[e]))
+//                     }
+//                     aplayers.push(new APlayer(d))
+//                 }
+//                 for (var f = 0; f < aplayers.length; f++) try {
+//                     aplayers[f].lrc.hide();
+//                 } catch (a) {
+//                     console.log(a)
+//                 }
+//                 var lrcTag = 1;
+//                 $(".aplayer.aplayer-fixed").click(function () {
+//                     if (lrcTag == 1) {
+//                         for (var f = 0; f < aplayers.length; f++) try {
+//                             aplayers[f].lrc.show();
+//                         } catch (a) {
+//                             console.log(a)
+//                         }
+//                     }
+//                     lrcTag = 2;
+//                 });
+//                 var apSwitchTag = 0;
+//                 $(".aplayer.aplayer-fixed .aplayer-body").addClass("ap-hover");
+//                 $(".aplayer-miniswitcher").click(function () {
+//                     if (apSwitchTag == 0) {
+//                         $(".aplayer.aplayer-fixed .aplayer-body").removeClass("ap-hover");
+//                         apSwitchTag = 1;
+//                     } else {
+//                         $(".aplayer.aplayer-fixed .aplayer-body").addClass("ap-hover");
+//                         apSwitchTag = 0;
+//                     }
+//                 });
+//             }
+//             var b = 'https://api.i-meto.com/meting/api?server=:server&type=:type&id=:id&r=:r';
+//             'undefined' != typeof meting_api && (b = meting_api);
+//             for (var f = 0; f < aplayers.length; f++) try {
+//                 aplayers[f].destroy()
+//             } catch (a) {
+//                 console.log(a)
+//             }
+//             aplayers = [];
+//             for (var c = document.querySelectorAll('.aplayer'), d = function () {
+//                 var d = c[e],
+//                     f = d.dataset.id;
+//                 if (f) {
+//                     var g = d.dataset.api || b;
+//                     g = g.replace(':server', d.dataset.server), g = g.replace(':type', d.dataset.type), g = g.replace(':id', d.dataset.id), g = g.replace(':auth', d.dataset.auth), g = g.replace(':r', Math.random());
+//                     var h = new XMLHttpRequest;
+//                     h.onreadystatechange = function () {
+//                         if (4 === h.readyState && (200 <= h.status && 300 > h.status || 304 === h.status)) {
+//                             var b = JSON.parse(h.responseText);
+//                             a(d, b)
+//                         }
+//                     }, h.open('get', g, !0), h.send(null)
+//                 } else if (d.dataset.url) {
+//                     var i = [{
+//                         name: d.dataset.name || d.dataset.title || 'Audio name',
+//                         artist: d.dataset.artist || d.dataset.author || 'Audio artist',
+//                         url: d.dataset.url,
+//                         cover: d.dataset.cover || d.dataset.pic,
+//                         lrc: d.dataset.lrc,
+//                         type: d.dataset.type || 'auto'
+//                     }];
+//                     a(d, i)
+//                 }
+//             }, e = 0; e < c.length; e++) d()
+//         };
+//     document.addEventListener('DOMContentLoaded', loadMeting, !1);
+// }
+// if (document.body.clientWidth > 860) {
+//     aplayerF();
+// }

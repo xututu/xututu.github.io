@@ -245,12 +245,12 @@
 }
 #MainBox.hideQR {
   opacity: 1;
-    animation-name:hideQR;
-    animation-duration:0.5s;
-    animation-timing-function:ease-in-out;
-    animation-iteration-count:1;
-    animation-fill-mode:forwards;
-    -webkit-animation:hideQR 0.5s ease-in-out 0s 1 normal forwards;
+  animation-name:hideQR;
+  animation-duration:0.5s;
+  animation-timing-function:ease-in-out;
+  animation-iteration-count:1;
+  animation-fill-mode:forwards;
+  -webkit-animation:hideQR 0.5s ease-in-out 0s 1 normal forwards;
 }
 @keyframes hideQR {
   from {
